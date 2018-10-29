@@ -1,0 +1,9 @@
+<form>
+  <div>
+    <input name="isAttachFile" type="checkbox" [(ngModel)]="isAttachFile">
+    <div *ngIf="isAttachFile">
+      <input name="file" type="file" multiple #file (change)="handleFile($event.target.files)">
+      {{file}}
+    </div>
+  </div>
+</form>
