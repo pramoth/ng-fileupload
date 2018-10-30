@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 @Component({
@@ -9,7 +9,7 @@ import {HttpClient} from '@angular/common/http';
 export class MyUploadComponent implements OnInit {
   isAttachFile = true;
   @ViewChild('file')
-  __file: any;
+  __file: ElementRef;
 
   constructor(private http: HttpClient) {
   }
@@ -30,11 +30,16 @@ export class MyUploadComponent implements OnInit {
   handleFile(files: FileList) {
     const formData: FormData = new FormData();
     for (let i = 0; i < files.length; i++) {
-      formData.append(`file-${i}`, files[i], files[i].name);
-
+      console.log(files[i]);
+      formData.append(`file`, files[i], files[i].name);
     }
     this.http.post('upload', formData).subscribe(e => {
     }, err => console.log(err));
+  }
+
+  clearFile() {
+    console.log('correct way to clear input type=file value');
+    this.__file.nativeElement.value = '';
   }
 
 }
